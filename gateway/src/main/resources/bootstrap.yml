@@ -1,0 +1,27 @@
+nacos:
+  server-addr: 127.0.0.1:8848
+  namespace: 888b31f6-d265-4b50-a639-eb17557e11da
+  config-namespace: 888b31f6-d265-4b50-a639-eb17557e11da
+  group: DEFAULT_GROUP
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.config-namespace}
+        group: ${nacos.group}
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.config-namespace}
+        file-extension: yml
+        group: ${nacos.group}
+  main:
+    allow-circular-references: true

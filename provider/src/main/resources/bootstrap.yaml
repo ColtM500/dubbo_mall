@@ -1,0 +1,54 @@
+nacos:
+  server-addr: 127.0.0.1:8848
+  group: DEFAULT_GROUP
+  config-namespace: 888b31f6-d265-4b50-a639-eb17557e11da
+  namespace: 888b31f6-d265-4b50-a639-eb17557e11da
+
+  
+spring:
+  application:
+    name: provider
+  cloud:
+    # Nacos 服务发现与注册配置
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        enabled: true
+        register-enabled: true
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.config-namespace}
+        group: ${nacos.group}
+      config:
+        enabled: false
+        import-check:
+          enabled: false
+        server-addr: ${nacos.server-addr}
+        namespace: ${nacos.config-namespace}
+        file-extension: yml
+        group: ${nacos.group}
+    sentinel:
+      enabled: true
+      transport:
+        dashboard: localhost:8719
+  main:
+    allow-circular-references: true
+
+dubbo:
+  protocol:
+    port: 20880
+  registry:
+    address: nacos://localhost:8848
+  metadata-report:
+    address: nacos://localhost:8848
+    username: nacos
+    password: nacos
+    group: ${nacos.group}
+server:
+  port: 8897
+
+management:
+  endpoints:
+    web:
+      explore:
+        include: '*'
